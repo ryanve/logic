@@ -19,7 +19,7 @@ namespace logic;
  * @param   string|number  $key
  * @return  array
  */
-if ( ! \function_exists( __NAMESPACE__ . 'pluck' ) ) {
+if ( ! \function_exists( __NAMESPACE__ . '\\pluck' ) ) {
     function pluck ( $list, $field ) {
         return \array_values( (array) \wp_list_pluck( $list, $field ) );
     }
@@ -31,7 +31,7 @@ if ( ! \function_exists( __NAMESPACE__ . 'pluck' ) ) {
  * @param   mixed    $value
  * @return  bool     true for: null|false|''|0|NAN
  */
-if ( ! \function_exists( __NAMESPACE__ . 'emp' ) ) {
+if ( ! \function_exists( __NAMESPACE__ . '\\emp' ) ) {
     function emp ( $value ) {
         if ( !empty($value) )
             return $value !== $value; # NAN
@@ -45,7 +45,7 @@ if ( ! \function_exists( __NAMESPACE__ . 'emp' ) ) {
  * @param   bool=         $inv  option to invert the result of the filter
  * @return  array
  */
-if ( ! \function_exists( __NAMESPACE__ . 'sift' ) ) {
+if ( ! \function_exists( __NAMESPACE__ . '\\sift' ) ) {
     function sift ( $arr, $fn = null, $inv = null ) {
         $result = array();
         $inv = $inv === true; # require explicit to invert + ensure bool for use in loop
@@ -56,7 +56,7 @@ if ( ! \function_exists( __NAMESPACE__ . 'sift' ) ) {
     }
 }
 
-if ( ! \function_exists( __NAMESPACE__ . 'kv' ) ) {
+if ( ! \function_exists( __NAMESPACE__ . '\\kv' ) ) {
     function kv ( $arr, $glue = '' ) {
         foreach ( $arr as $k => &$v )
             $v = \is_int($k) ? $v : ( $v || \is_numeric($v) ? $k . $glue . $v : $k );
@@ -70,7 +70,7 @@ if ( ! \function_exists( __NAMESPACE__ . 'kv' ) ) {
  * @return   string
  * @link     dev.w3.org/html5/spec/common-microsyntaxes.html
  */
-if ( ! \function_exists( __NAMESPACE__ . 'token_implode' ) ) {
+if ( ! \function_exists( __NAMESPACE__ . '\\token_implode' ) ) {
     function token_implode ( $tokens, $glue = ' ' ) {
 
         if ( \is_scalar($tokens) )
@@ -95,7 +95,7 @@ if ( ! \function_exists( __NAMESPACE__ . 'token_implode' ) ) {
  * @return   array
  * @link     dev.w3.org/html5/spec/common-microsyntaxes.html
  */
-if ( ! \function_exists( __NAMESPACE__ . 'token_explode' ) ) {
+if ( ! \function_exists( __NAMESPACE__ . '\\token_explode' ) ) {
     function token_explode ( $tokens, $glue = ' ' ) {
 
         if ( \is_string($tokens) )
@@ -120,7 +120,7 @@ if ( ! \function_exists( __NAMESPACE__ . 'token_explode' ) ) {
 /**
  * @return  string|false|null
  */
-if ( ! \function_exists( __NAMESPACE__ . 'timeframe' ) ) {
+if ( ! \function_exists( __NAMESPACE__ . '\\timeframe' ) ) {
     function timeframe () {
     
         global $wp_query;
@@ -153,7 +153,7 @@ if ( ! \function_exists( __NAMESPACE__ . 'timeframe' ) ) {
 /**
  * @return  string|false|null
  */
-if ( ! \function_exists( __NAMESPACE__ . 'format' ) ) {
+if ( ! \function_exists( __NAMESPACE__ . '\\format' ) ) {
     function format ( $id = null ) {
         return \current_theme_supports('post-formats') ? \get_post_format( $id ) : false; 
     }
@@ -163,7 +163,7 @@ if ( ! \function_exists( __NAMESPACE__ . 'format' ) ) {
  * Get an array of contexts
  * @return  array
  */
-if ( ! \function_exists( __NAMESPACE__ . 'contexts' ) ) {
+if ( ! \function_exists( __NAMESPACE__ . '\\contexts' ) ) {
     function contexts () {
 
         static $array;
@@ -288,7 +288,7 @@ if ( ! \function_exists( __NAMESPACE__ . 'contexts' ) ) {
     }
 }
 
-if ( ! \function_exists( __NAMESPACE__ . 'classes' ) ) {
+if ( ! \function_exists( __NAMESPACE__ . '\\classes' ) ) {
     function classes () {
 
         static $classes;
@@ -320,7 +320,7 @@ if ( ! \function_exists( __NAMESPACE__ . 'classes' ) ) {
  * @param   string|null   $field
  * @param   integer|null  $id
  */
-if ( ! \function_exists( __NAMESPACE__ . 'terms' ) ) {
+if ( ! \function_exists( __NAMESPACE__ . '\\terms' ) ) {
     function terms ( $id = null, $tax = null, $field = 'slug' ) {
 
         if ( \is_string($tax) && taxonomy_exists($tax) ) {
@@ -343,7 +343,7 @@ if ( ! \function_exists( __NAMESPACE__ . 'terms' ) ) {
  * @param   string|integer|object  $type
  * @return  array
  */
-if ( ! \function_exists( __NAMESPACE__ . 'taxos' ) ) {
+if ( ! \function_exists( __NAMESPACE__ . '\\taxos' ) ) {
     function taxos ( $type = null, $field = 'name' ) {
         global $wp_taxonomies; # expedite get_taxonomies()
         $taxos = $field ? \wp_list_pluck( $wp_taxonomies, $field ) : $wp_taxonomies;
@@ -366,7 +366,7 @@ if ( ! \function_exists( __NAMESPACE__ . 'taxos' ) ) {
  * @example  sidebars(true)  # active
  * @example  sidebars(false) # inactive
  */
-if ( ! \function_exists( __NAMESPACE__ . 'sidebars' ) ) {
+if ( ! \function_exists( __NAMESPACE__ . '\\sidebars' ) ) {
     function sidebars ( $active = null ) {
         global $wp_registered_sidebars;
         $sidebars = \array_keys( $wp_registered_sidebars );
@@ -378,7 +378,7 @@ if ( ! \function_exists( __NAMESPACE__ . 'sidebars' ) ) {
  *
  *
  */
-if ( ! \function_exists( __NAMESPACE__ . 'entry_attrs' ) ) {
+if ( ! \function_exists( __NAMESPACE__ . '\\entry_attrs' ) ) {
     function entry_attrs ( $id = null, $array = false ) {
         
         $attrs = array('class' => null);
