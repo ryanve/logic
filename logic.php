@@ -10,6 +10,7 @@
  * Version:       0.5.0
  */
 
+# PHP 5.3+ required (php.net/manual/en/language.namespaces.php)
 namespace logic;
 
 /**
