@@ -7,7 +7,7 @@
  * Author URI:    http://ryanvanetten.com
  * License:       MIT
  * License URI:   http://opensource.org/licenses/MIT
- * Version:       0.6.1
+ * Version:       0.6.2
  */
 
 namespace plugin\logic;
@@ -132,7 +132,7 @@ class Logic {
             if ('attachment' == $type) {
                 $mime = get_post_mime_type();
                 $mime && ctype_alnum($n = strtok($mime, '/')) and $array['mime'] = $n;
-            } elseif ($format = format($id)) {
+            } elseif ($format = static::format($id)) {
                 $array['format'] = $format;
                 $array['pfor'] = implode(' ', static::terms($id, 'post_format'));
             }
@@ -159,9 +159,9 @@ class Logic {
 
             } elseif (is_author()) {
                 $array[] = 'user';
-                $slug = sanitize_html_class( get_the_author_meta( 'user_nicename', $id ) );
+                $slug = sanitize_html_class(get_the_author_meta('user_nicename', $id));
 
-            } elseif ($unit = timeframe()) {
+            } elseif ($unit = static::timeframe()) {
                 # In WP: a "time" is a type of "date"
                 # On the rest of the planet: a "date" is a type of "time" 
                 # @link codex.wordpress.org/Conditional_Tags
@@ -173,10 +173,12 @@ class Logic {
                 $slug = $id = null;
                 $vars = array('year' => 'year', 'month' => 'monthnum', 'day' => 'day');
                 if (isset($vars[$unit])) {
-                    foreach ($vars as $n) {
-                        if ($n = (int) get_query_var($n))
-                            $id = ($id ? $id . '-' : '') . ($slug = zeroise($n, 2));
-                        else break;
+                    foreach ($vars as $k => $v) {
+                        if ($v = (int) get_query_var($v)) {
+                            $v = zeroise($v, 2);
+                            null === $slug and $slug = $v;
+                            $array[$k] =  $v;
+                        } else break;
                     }
                 }
             }
@@ -184,22 +186,9 @@ class Logic {
 
         $array['slug'] = $slug;
         $array = array_filter($array, 'ctype_graph');
-        $id and $array['id'] = $id;
+        is_int($id) and $array['id'] = $id;
         return $array;
     }
-   
-    /*public static function classes() {
-        static $classes;
-        if (null !== $classes || null === ($classes = static::contexts()))
-            return $classes;
-        $unis = apply_filters('@universal_classes', array('no-js', 'custom', 'wp'));
-        $unis = is_string($unis) ? preg_split('#\s+#', $unis) : (array) $unis;
-        $classes = array_unique(array_merge($unis, $classes));
-        $classes = array_map('sanitize_html_class', array_filter($classes, 'ctype_graph'));
-        $classes = trim(preg_replace('#(^|\&+)(\d+\=)?#', ' ', http_build_query($classes)));
-        $classes = htmlentities($classes, ENT_QUOTES, null, false);
-        return str_replace('=', static::sep(), $classes);
-    }*/
 
     public static function toClass() {
         $classes = array_unique(array_reduce(func_get_args(), function($result, $n) {
