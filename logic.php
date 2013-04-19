@@ -7,11 +7,11 @@
  * Author URI:    http://ryanvanetten.com
  * License:       MIT
  * License URI:   http://opensource.org/licenses/MIT
- * Version:       0.6.0
+ * Version:       0.6.1
  */
 
 namespace plugin\logic;
-
+ 
 add_action('init', 'plugin\\logic\\Logic::init');
 
 class Logic {
@@ -32,32 +32,6 @@ class Logic {
     
     public static function id($id = null) {
         return $id ? (is_object($id) ? $id->ID : $id) : get_the_ID();
-    }
-    
-    /**
-     * An alternative to empty() that behaves like JavaScript.
-     * @param   mixed    $item
-     * @return  bool
-     */
-    protected static function emp($item) {
-        return $item ? $item !== $item : null === $item || false === $item || '' === $item || 0 === $item;
-    }
-    
-    
-    /**
-     * @param   array|object  $arr  array or object to filter
-     * @param   mixed=        $fn   filter callback (named or anonymous func)
-     * @param   bool=         $inv  option to invert the result of the filter
-     * @return  array
-     */
-    protected static function sift($arr, $fn = null, $inv = null) {
-        $result = array();
-        $inv = $inv === true;
-        foreach ($arr as $k => $v) {
-            if ($inv === ($fn ? !call_user_func($fn, $v, $k, $arr) : static::emp($v)))
-                is_int($k) ? ($result[] = $v) : ($result[$k] = $v);
-        }
-        return $result;
     }
     
     /**
